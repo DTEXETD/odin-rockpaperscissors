@@ -1,3 +1,13 @@
+const div = document.querySelector(".div1")
+const div2 = document.querySelector(".div2")
+const div3 = document.querySelector(".div3")
+const div4 = document.querySelector(".div5")
+const buttonReplay = document.createElement("button")
+
+buttonReplay.textContent = "Replay"
+
+
+
 const util = ["rock", "paper", "scissors"];
 
 let humanScore = 0;
@@ -17,42 +27,99 @@ function getHumanChoice() {
 }
 
 function playRound(humanChoice, computerChoice) {
+
+    
+    
     if (humanChoice == computerChoice) {
-        console.log("It's a draw!")
+        div2.textContent = "It's a draw!"
     }
     // Wins when
     if (humanChoice == "rock" && computerChoice == "scissors") {
-        console.log("You win! Rock beats Scissors");
+        div2.textContent = "You win! Rock beats Scissors"
         humanScore += 1;
     }
     if (humanChoice == "paper" && computerChoice == "rock") {
-        console.log("You win! Paper beats Rock");
+        div2.textContent = "You win! Paper beats Rock"
         humanScore += 1;
     }
     if (humanChoice == "scissors" && computerChoice == "paper") {
-        console.log("You win! Scissors beats Paper");
+        div2.textContent = "You win! Scissors beats Paper";
         humanScore += 1;
     }
     // Loses When
     if (humanChoice == "rock" && computerChoice == "paper") {
-        console.log("You lose! Paper beats Rock");
+        div2.textContent = "You lose! Paper beats Rock";
         computerScore += 1;
     }
     if (humanChoice == "paper" && computerChoice == "scissors") {
-        console.log("You lose! Scissors beats Paper");
+        div2.textContent = "You lose! Scissors beats Paper";
         computerScore += 1;
     }
     if (humanChoice == "scissors" && computerChoice == "rock") {
-        console.log("You lose! Rock beats Scissors");
+        div2.textContent = "You lose! Rock beats Scissors";
         computerScore += 1;
     }
+    
+    if (humanScore == 5) {
+        div2.textContent += "  |||You Won|||  "
+    }
+    
+    if (computerScore == 5) {
+        div2.textContent += "  |||The Computer Won|||  "
+    }
+    if (humanScore == 5 || computerScore == 5) {
+        buttonRock.removeEventListener("click", playRock)
+        buttonPaper.removeEventListener("click", playPaper)
+        buttonScissors.removeEventListener("click", playScissors)
+        div2.append(buttonReplay)
+        buttonReplay.addEventListener("click", () => {
+            buttonReplay.remove()
+            
+            div2.textContent = ""
+            div3.textContent = ""
+            div4.textContent = ""
+            start()
+        })
+    }
+    div3.textContent = "Human Score: " + humanScore
+    div4.textContent = "Computer Score: " + computerScore
+    
+    console.log("Human Score: " + humanScore)
+    console.log("Computer Score: " + computerScore)
 }
 
 
-let round = 0; 
+// let round = 0; 
 
-for (i = 5; round < i; round++) {
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-    playRound(humanSelection, computerSelection);
+// for (i = 5; round < i; round++) {
+    //     const humanSelection = getHumanChoice();
+    //     const computerSelection = getComputerChoice();
+    //     playRound(humanSelection, computerSelection);
+    // }
+
+const buttonRock = document.createElement("button")
+const buttonPaper = document.createElement("button")
+const buttonScissors = document.createElement("button")
+
+buttonRock.textContent = "Rock"
+buttonPaper.textContent = "Paper"
+buttonScissors.textContent = "Scissors"
+
+const playRock = () => playRound("rock", getComputerChoice())
+const playPaper = () => playRound("paper", getComputerChoice())
+const playScissors = () => playRound("scissors", getComputerChoice())
+
+function start() {
+    humanScore = 0
+    computerScore = 0
+
+    buttonRock.addEventListener("click", playRock)
+    buttonPaper.addEventListener("click", playPaper)
+    buttonScissors.addEventListener("click", playScissors)
 }
+
+start()
+    
+div.appendChild(buttonRock)
+div.appendChild(buttonPaper)
+div.appendChild(buttonScissors)
